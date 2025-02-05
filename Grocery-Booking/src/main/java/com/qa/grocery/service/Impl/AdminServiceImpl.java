@@ -12,14 +12,17 @@ import org.springframework.stereotype.Service;
 
 import com.qa.grocery.constants.ApplicationConstants;
 import com.qa.grocery.constants.ErrorConstants;
+import com.qa.grocery.controller.GroceryStockUpdateRequest;
 import com.qa.grocery.entities.GroceryItems;
 import com.qa.grocery.entities.GroceryStockInfos;
 import com.qa.grocery.entities.User;
 import com.qa.grocery.exceptionhandeling.APIException;
+import com.qa.grocery.repositories.GroceryInfosRepository;
 import com.qa.grocery.repositories.GroceryItemsRepository;
 import com.qa.grocery.repositories.UserRepository;
 import com.qa.grocery.request.GroceryRemoveRequest;
 import com.qa.grocery.request.GroceryRequest;
+import com.qa.grocery.request.GroceryUpdateRequest;
 import com.qa.grocery.response.GroceryResponse;
 import com.qa.grocery.response.GroceryResponseWithHeader;
 import com.qa.grocery.response.GroceryShowResponse;
@@ -33,6 +36,9 @@ public class AdminServiceImpl implements AdminService {
 	
 	@Autowired
 	GroceryItemsRepository groceryRepository;
+	
+	@Autowired
+	GroceryInfosRepository stockRepo;
 
 	@Override
 	public GroceryResponse createGrocery(GroceryRequest groceryRequest) {
@@ -120,5 +126,42 @@ public class AdminServiceImpl implements AdminService {
 		groceryRepository.deleteById(grocery.get().getId());;
 		return ApplicationConstants.GROCERY_DELETION+groceryRemoveRequest.getItemId();
 	}
+
+	@Override
+	public GroceryResponse updateGrocery(GroceryUpdateRequest updateRequest) {
+		// TODO Auto-generated method stub
+		Optional<GroceryItems> grocery = groceryRepository.findById(updateRequest.getId());
+		if(grocery.isEmpty()) {
+			throw new APIException(ErrorConstants.GROCERY_NOT_FOUND + updateRequest.getId());
+		}
+		GroceryItems updatedGrocery = grocery.get();
+		updatedGrocery.setName(updateRequest.getItemName());
+		updatedGrocery.setPrice(updateRequest.getPrice());
+		GroceryItems newGrocery = groceryRepository.save(updatedGrocery);
+		return buildCreateGroceryResponse(newGrocery);
+	}
+
+	@Override
+	public GroceryShowResponse updateGroceryStock(GroceryStockUpdateRequest groceryStockUpdateRequest) {
+		// TODO Auto-generated method stub
+		Optional<GroceryItems> grocery = groceryRepository.findById(groceryStockUpdateRequest.getId());
+		if(grocery.isEmpty()) {
+			throw new APIException(ErrorConstants.GROCERY_NOT_FOUND + groceryStockUpdateRequest.getId());
+		}
+		GroceryItems updateGrocery = grocery.get();
+		Optional<GroceryStockInfos> stockInfo = stockRepo.findById(updateGrocery.getGroceryInfos().getId());
+		if(stockInfo.isEmpty()) {
+			throw new APIException(ErrorConstants.STOCK_NOT_FOUND);
+		}
+		GroceryStockInfos updateStockInfo = stockInfo.get();
+		updateStockInfo.setStockInCount(stockInfo.get().getStockInCount()+groceryStockUpdateRequest.getNewStock());
+		updateGrocery.setGroceryInfos(updateStockInfo);
+		
+		GroceryItems updatedGroceryItems = groceryRepository.save(updateGrocery);
+		
+		return buildShowGroceriesResposne(updatedGroceryItems);
+	}
+
+
 
 }

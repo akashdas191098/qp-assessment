@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,8 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.qa.grocery.constants.ApplicationConstants;
 import com.qa.grocery.request.GroceryRemoveRequest;
 import com.qa.grocery.request.GroceryRequest;
+import com.qa.grocery.request.GroceryUpdateRequest;
 import com.qa.grocery.response.GroceryResponse;
 import com.qa.grocery.response.GroceryResponseWithHeader;
+import com.qa.grocery.response.GroceryShowResponse;
 import com.qa.grocery.service.AdminService;
 
 @RestController
@@ -51,5 +54,20 @@ public class AdminController {
 	public String deleteGroceries(@RequestBody GroceryRemoveRequest groceryRemoveRequest) {
 		return adminService.removeGroceries(groceryRemoveRequest);
 	}
+	
+	/*
+	 * - update grocery
+	 */
+	
+	@PutMapping("/update-grocery")
+	public GroceryResponse updateGrocery(@RequestBody GroceryUpdateRequest updateRequest) {
+		return adminService.updateGrocery(updateRequest);
+	}
+	
+	@PutMapping("/update-stock")
+	public GroceryShowResponse updateStock(@RequestBody GroceryStockUpdateRequest groceryStockUpdateRequest) {
+		return adminService.updateGroceryStock(groceryStockUpdateRequest);
+	}
+	
 
 }
