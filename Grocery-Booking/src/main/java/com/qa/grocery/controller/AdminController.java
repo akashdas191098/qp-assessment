@@ -64,6 +64,9 @@ public class AdminController {
 		return adminService.updateGrocery(updateRequest);
 	}
 	
+	/*
+	 * - update grocery stock
+	 */
 	@PutMapping("/update-stock")
 	public GroceryShowResponse updateStock(@RequestBody GroceryStockUpdateRequest groceryStockUpdateRequest) {
 		return adminService.updateGroceryStock(groceryStockUpdateRequest);
