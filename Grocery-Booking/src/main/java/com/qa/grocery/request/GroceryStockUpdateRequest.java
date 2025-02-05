@@ -1,4 +1,4 @@
-package com.qa.grocery.controller;
+package com.qa.grocery.request;
 
 import lombok.Data;
 

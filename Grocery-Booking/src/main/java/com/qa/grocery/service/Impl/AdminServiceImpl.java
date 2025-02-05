@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import com.qa.grocery.constants.ApplicationConstants;
 import com.qa.grocery.constants.ErrorConstants;
-import com.qa.grocery.controller.GroceryStockUpdateRequest;
 import com.qa.grocery.entities.GroceryItems;
 import com.qa.grocery.entities.GroceryStockInfos;
 import com.qa.grocery.entities.User;
@@ -22,6 +21,7 @@ import com.qa.grocery.repositories.GroceryItemsRepository;
 import com.qa.grocery.repositories.UserRepository;
 import com.qa.grocery.request.GroceryRemoveRequest;
 import com.qa.grocery.request.GroceryRequest;
+import com.qa.grocery.request.GroceryStockUpdateRequest;
 import com.qa.grocery.request.GroceryUpdateRequest;
 import com.qa.grocery.response.GroceryResponse;
 import com.qa.grocery.response.GroceryResponseWithHeader;
