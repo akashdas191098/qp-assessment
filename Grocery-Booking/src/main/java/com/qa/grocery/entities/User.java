@@ -37,11 +37,11 @@ public class User extends CommonEntityProperties {
 	
 	private boolean isAdmin;
 	
-	@Column(name="broughtCount")
-	private Integer broughtCount;
+//	@Column(name="broughtCount")
+//	private Integer broughtCount;
 	
-    @JsonIgnore
-    @OneToMany(targetEntity = GroceryItems.class, cascade = { CascadeType.ALL })
-    @JoinColumn(name = "groceryId", referencedColumnName = "id")
-    private List<GroceryItems> groceryId;
+//    @JsonIgnore
+//    @OneToMany(targetEntity = GroceryItems.class, cascade = { CascadeType.ALL })
+//    @JoinColumn(name = "user_id", referencedColumnName = "id")
+//    private List<GroceryItems> groceryId;
 }

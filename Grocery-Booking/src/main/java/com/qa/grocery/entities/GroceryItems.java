@@ -1,9 +1,12 @@
 package com.qa.grocery.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -36,4 +39,11 @@ public class GroceryItems extends CommonEntityProperties {
 	@JoinColumn(name = "stockInfo_id", referencedColumnName = "id")
 	private GroceryStockInfos groceryInfos;
 	
+	@JsonIgnore
+    @ManyToOne(targetEntity = User.class, cascade = {CascadeType.ALL})
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User users;
+	
+	@Column(name="broughtCount")
+	private Integer broughtCount;
 }

@@ -15,4 +15,6 @@ public class ApplicationConstants {
     public static final String SPACE_FORMAT = " ";
     
     public static final String DAFAULT_SEARCH_FORMAT = "NULL";
+    
+    public static final String USER_CREATION = "User created with the id with : ";
 }
