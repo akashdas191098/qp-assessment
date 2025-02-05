@@ -17,4 +17,6 @@ public class ApplicationConstants {
     public static final String DAFAULT_SEARCH_FORMAT = "NULL";
     
     public static final String USER_CREATION = "User created with the id with : ";
+    
+    public static final String GROCERY_DELETION = "Grocery is deleted for id : ";
 }

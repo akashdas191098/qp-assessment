@@ -4,7 +4,8 @@ public class ErrorConstants {
 	
 	public static final String USER_NOT_FOUND = "user not found with the given id : ";
 	public static final String USER_NOT_ADMIN = "user is not an admin to add grocery";
-	public static final String BOOK_NOT_FOUND = "Book not found or not available for issueing";
-	public static final String WRONG_BOOK_RETURNING = "This book is not issued to this user";
+	public static final String USER_NOT_ADMIN_VIEW = "user is not an admin to view grocery lists";
+	public static final String USER_NOT_ADMIN_DELETE = "user is not an admin to delete grocery items";
+	public static final String GROCERY_NOT_FOUND="Grocery Item is not found with the id of : ";
 	public static final boolean status = false;
 }
