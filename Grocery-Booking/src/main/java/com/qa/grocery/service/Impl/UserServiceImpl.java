@@ -9,6 +9,7 @@ import com.qa.grocery.constants.ApplicationConstants;
 import com.qa.grocery.constants.ErrorConstants;
 import com.qa.grocery.entities.User;
 import com.qa.grocery.exceptionhandeling.APIException;
+import com.qa.grocery.repositories.GroceryItemsRepository;
 import com.qa.grocery.repositories.UserRepository;
 import com.qa.grocery.request.CreateUserRequest;
 import com.qa.grocery.response.UserUpdateResponse;
@@ -20,6 +21,9 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	UserRepository userRepositories;
+	
+	@Autowired
+	GroceryItemsRepository groceryRepo;
 	
 	@Override
 	public String createUser(CreateUserRequest userRequest) {
