@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.qa.grocery.request.CreateUserRequest;
 import com.qa.grocery.request.UserBuyRequest;
 import com.qa.grocery.response.GroceryBuyResponseWithTotalCost;
-import com.qa.grocery.response.GroceryResponse;
 import com.qa.grocery.response.UserUpdateResponse;
 import com.qa.grocery.service.UserService;
 
