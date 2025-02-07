@@ -155,6 +155,9 @@ public class AdminServiceImpl implements AdminService {
 		}
 		GroceryStockInfos updateStockInfo = stockInfo.get();
 		updateStockInfo.setStockInCount(stockInfo.get().getStockInCount()+groceryStockUpdateRequest.getNewStock());
+		if(updateStockInfo.getStockInCount()>0) {
+			updateStockInfo.setInStock(true);
+		}
 		updateGrocery.setGroceryInfos(updateStockInfo);
 		
 		GroceryItems updatedGroceryItems = groceryRepository.save(updateGrocery);
