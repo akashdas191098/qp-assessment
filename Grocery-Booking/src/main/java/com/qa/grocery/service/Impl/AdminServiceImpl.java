@@ -100,6 +100,7 @@ public class AdminServiceImpl implements AdminService {
 		return GroceryShowResponse.builder()
 				.id(groceryItems.getId())
 				.itemName(groceryItems.getName())
+				.price(groceryItems.getPrice())
 				.totalStock(groceryItems.getGroceryInfos().getStockInCount()).build();
 	}
 	

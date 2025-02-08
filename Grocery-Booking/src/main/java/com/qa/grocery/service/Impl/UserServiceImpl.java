@@ -3,8 +3,12 @@ package com.qa.grocery.service.Impl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.qa.grocery.constants.ApplicationConstants;
@@ -24,6 +28,8 @@ import com.qa.grocery.request.CreateUserRequest;
 import com.qa.grocery.request.UserBuyRequest;
 import com.qa.grocery.response.GroceryBuyResponse;
 import com.qa.grocery.response.GroceryBuyResponseWithTotalCost;
+import com.qa.grocery.response.GroceryResponseWithHeader;
+import com.qa.grocery.response.GroceryShowResponse;
 import com.qa.grocery.response.UserUpdateResponse;
 import com.qa.grocery.service.UserService;
 
@@ -151,6 +157,44 @@ public class UserServiceImpl implements UserService {
 				.quantity(orderdetails.getBroughtCount())
 				.build();
 	}
+
+	@Override
+	public GroceryResponseWithHeader viewAvailableGroceries(Integer pageNumber, Integer pageSize, Integer userId) {
+		// TODO Auto-generated method stub
+		Optional<User> user = userRepositories.findById(userId);
+		if(user.isEmpty()) {
+			throw new APIException(ErrorConstants.USER_NOT_FOUND+userId);
+		}
+		
+		Pageable p = PageRequest.of(pageNumber, pageSize);
+		
+		Page<GroceryItems> pageGroceries = groceryRepo.findAvailableGrocries(p);
+		List<GroceryItems> listGroceries = pageGroceries.getContent();
+		List<GroceryShowResponse> showGroceries = listGroceries.stream().map(g->buildShowGroceriesResposne(g)).collect(Collectors.toList());
+	
+		return buildGroceryResponseWithHeader(showGroceries, pageGroceries);
+	}
+	
+	
+	private GroceryShowResponse buildShowGroceriesResposne(GroceryItems groceryItems) {
+		// TODO Auto-generated method stub
+		return GroceryShowResponse.builder()
+				.id(groceryItems.getId())
+				.itemName(groceryItems.getName())
+				.price(groceryItems.getPrice())
+				.totalStock(groceryItems.getGroceryInfos().getStockInCount()).build();
+	}
+	
+	
+	private GroceryResponseWithHeader buildGroceryResponseWithHeader(List<GroceryShowResponse> listGroceries, Page<GroceryItems> pageGroceries) {
+		return GroceryResponseWithHeader.builder()
+				.currentPage(pageGroceries.getNumber())
+				.totalRecordPerPage(pageGroceries.getNumberOfElements())
+				.totalRecords(pageGroceries.getTotalElements())
+				.totalPages(pageGroceries.getTotalPages())
+				.groceries(listGroceries).build();
+	}
+
 
 	
 

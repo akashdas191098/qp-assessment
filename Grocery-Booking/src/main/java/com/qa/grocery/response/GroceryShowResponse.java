@@ -9,5 +9,6 @@ public class GroceryShowResponse  {
 	
 	private Integer id;
 	private String  itemName;
+	private double price;
 	private Integer totalStock;
 }
