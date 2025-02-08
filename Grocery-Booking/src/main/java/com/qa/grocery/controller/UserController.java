@@ -22,6 +22,9 @@ import com.qa.grocery.service.UserService;
 
 @RestController
 @RequestMapping("/api/users")
+/*
+ * user responsibilities
+ */
 public class UserController {
 	
 	@Autowired
@@ -37,12 +40,18 @@ public class UserController {
 		return userService.updateUser(id);
 	}
 	
+	/*
+	 * - Ability to book multiple grocery items in a single order
+	 */
 	@PostMapping("/buy-grocery/{userId}")
 	public GroceryBuyResponseWithTotalCost buyGrocery(@RequestBody List<UserBuyRequest> userGroceryRequest
 			,@PathVariable("userId")Integer userId){
 		return userService.buyGrocery(userGroceryRequest,userId);
 	}
 	
+	/*
+	 * - View the list of available grocery items
+	 */
 	@GetMapping("/view-Available-Groceries/{userId}")
 	public GroceryResponseWithHeader viewAvailableGroceries(@RequestHeader(value = "pageNumber", defaultValue = ApplicationConstants.DEFAULT_PAGE_NUMBER, required = false) Integer pageNumber,
             @RequestHeader(value = "pageSize", defaultValue = ApplicationConstants.DEFAULT_PAGE_SIZE, required = false) Integer pageSize,
